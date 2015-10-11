@@ -1,0 +1,37 @@
+.selected {
+    display:block;
+    width: 130px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+    padding: 0 10px;
+    color: #000;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.select-box {
+    display: none;
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    background: #dddddd;
+    border: 1px solid #bdc3c7;
+}
+
+.select-box > a {
+    display: block;
+    width: 139px;
+    background: #eee;
+    line-height: 25px;
+    font-size: 14px;
+    padding: 0 5px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #000;
+}
+
+.select-box > a:hover {
+    color: #fff;
+    background: #aaa;
+}

@@ -1,0 +1,1462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>34金币管理法</title>
+	<link rel="stylesheet" href="http://cdn.bootcss.com/normalize/3.0.3/normalize.min.css">
+	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+	<link rel="stylesheet" type="text/css" href="css/jquery.datetimepicker.css"/ >
+	<link rel="stylesheet" href="http://aui.github.io/artDialog/css/ui-dialog.css">
+	<link rel="stylesheet" href="css/select.css">
+	<style>
+		.container{max-width: 1000px;margin: 15px auto;}
+		.inner{min-height: 500px;text-align: center;margin: 20px 0;padding: 15px;}
+		.borderRight{border-right: 1px solid #eee;}
+
+		.main {background: #e1e1e1;}
+		.side {background: #e9e9e9;}
+
+		#timepicker_start,
+		#timepicker_end {width: 91px;margin: 5px 0;padding: 5px;font-size: 16px;}
+		.creatBtn {display: block;width: 243px;line-height: 30px;margin: 5px auto;color: #fff;background: #1F8DD6;text-decoration: none;}
+
+		.time-list {text-align: left;}
+		.time-list li {list-style: none;margin: 0 0 10px 0;}
+		.time-list li span {margin: 0 15px 0 0;}
+		
+		.time-record {width:100%;display:table;table-layout: fixed;height: 30px;background: #efefef;margin: 5px 0;}
+		.time-interval,
+		.set-item,
+		.select-wrap {display:table-cell;vertical-align: middle;text-align: center;border-left: 2px solid #f8f8f8;}
+		div.time-interval {border: none;width: 150px;}
+		.set-item {font-size: 14px;line-height: 150%;color: #666;font-weight: bold;cursor: pointer;padding: 0 10px;}
+		.select-wrap {width: 150px;}
+	</style>
+</head>
+<body>
+	<div class="container pure-g">
+		<div class="pure-u-1-3 side">
+			<div class="inner">
+				<h1>34金币管理</h1>
+				<div class="timebox">
+					<input type="text" id="datepicker">
+					<input id="timepicker_start" type="text" value="06:00"> —
+					<input id="timepicker_end" type="text" value="23:00">
+				</div>
+				<a class="creatBtn" href="javascript:;">重设时段区间</a>
+			</div>
+		</div>		
+		<div class="pure-u-2-3 main">
+			<div class="inner time-table">
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                06:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                06:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                06:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                07:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                07:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                07:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                07:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                08:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                08:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                08:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                08:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                09:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                09:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                09:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                09:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                10:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                10:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                10:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                10:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                11:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                11:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                11:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                11:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                12:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                12:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                12:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                12:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                13:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                13:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                13:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                13:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                14:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                14:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                14:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                14:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                15:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                15:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                15:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                15:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                16:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                16:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                16:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                16:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                17:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                17:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                17:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                17:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                18:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                18:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                18:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                18:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                19:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                19:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                19:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                19:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                20:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                20:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                20:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                20:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                21:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                21:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                21:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                21:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                22:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                22:00
+			            </span>
+			            -
+			            <span class="endTick">
+			                22:30
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>
+			    <div class="time-record">
+			        <div class="time-interval">
+			            <span class="startTick">
+			                22:30
+			            </span>
+			            -
+			            <span class="endTick">
+			                23:00
+			            </span>
+			        </div>
+			        <div class="set-item">
+			            +
+			        </div>
+			        <div class="select-wrap">
+			            <a class="selected" href="javascript:;">
+			                暂无状态
+			            </a>
+			            <div class="select-box">
+			                <a href="javascript:;" data-value="0">
+			                    例行工作
+			                </a>
+			                <a href="javascript:;" data-value="1">
+			                    拖延
+			                </a>
+			                <a href="javascript:;" data-value="2">
+			                    休息
+			                </a>
+			                <a href="javascript:;" data-value="3">
+			                    放松娱乐
+			                </a>
+			                <a href="javascript:;" data-value="4">
+			                    高效工作
+			                </a>
+			            </div>
+			        </div>
+			    </div>											
+			</div>
+		</div>
+	</div>
+
+	<!-- 脚本区 -->
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.datetimepicker.full.min.js"></script>
+	<script src="http://aui.github.io/artDialog/dist/dialog-plus.js"></script>
+	<script>
+		function setItem() {
+		    $('.set-item').on('click',function(){
+		    	var self = $(this);
+		    	var d = dialog({
+		    		title: '添加事项',
+		    		content: '<input class="thing" type="text">',
+		    		okValue: '确定',
+				    ok: function () {
+				    	var value = $('.thing').val();
+				    	self.text(value);
+				    },
+				    cancelValue: '取消',
+				    cancel: function () {}
+		    	});
+		    	d.showModal();
+		    });			
+		}
+		function selectStatus(){
+			var selected = $('.selected');
+			var selectBox = $('.select-box');
+
+			selected.on('click',function() {
+			    $(this).toggleClass('active');
+			    $(this).next('.select-box').slideToggle(200);
+			});
+
+			selectBox.find('a').on('click',function(){
+				var colors = ['#f39c12','#e74c3c','#2ecc71','#3498db','#f1c40f'];
+				var value = $(this).data('value');
+				var status = $(this).text();
+				console.log(value);
+			    $(this).parent().prev('.selected').text(status).css({'background':colors[value],'color':'#fff'});
+			});
+
+			$(document).on('click',function(event) { 
+			    if(!$(event.target).closest('.selected').length) {
+			        if(selectBox.is(":visible")) {
+			            selectBox.hide()
+			        }
+			    }        
+			});
+		}
+
+		$(function() {
+		    var allowTimes = [];
+		    for (var xh = 0; xh <= 23; xh++) {
+		        for (var xm = 0; xm < 60; xm += 30) {
+		            allowTimes.push(("0" + xh).slice( - 2) + ':' + ("0" + xm).slice( - 2));
+		        }
+		    }
+
+		    $.datetimepicker.setLocale('zh');
+			$('#datepicker').datetimepicker({
+			  	format:'d.m.Y',
+			  	inline:true,
+				i18n:{
+					zh:{
+				   		months:[
+				    		'1月','2月','3月','4月',
+				    		'5月','6月','7月','8月',
+				    		'9月','10月','11月','12月',
+				   		],
+				   		dayOfWeek:[
+				    		"周日", "周一", "周二", "周三", 
+				    		"周四", "周五", "周六",
+				   		]
+				  }
+				},
+			  	timepicker:false,
+			  	onGenerate:function( ct ){
+    				$(this).find('.xdsoft_date:not(.xdsoft_current)')
+      				.addClass('xdsoft_disabled');
+  				}
+			});
+
+		    $('#timepicker_start').datetimepicker({
+		        datepicker: false,
+		        format: 'H:i',
+		        defaultTime: '05:00',
+		        step: 30,
+		        onShow: function(ct) {
+		            this.setOptions({
+		                maxTime: $('#timepicker_end').val() ? $('#timepicker_end').val() : false
+		            });
+		        }
+		    });
+		    $('#timepicker_end').datetimepicker({
+		        datepicker: false,
+		        format: 'H:i',
+		        defaultTime: '23:00',
+		        step:30,
+		        onShow: function(ct) {
+		            this.setOptions({
+		                minTime: $('#timepicker_start').val() ? $('#timepicker_start').val() : false
+		            });
+		        }
+		    });
+
+		    setItem();
+		    selectStatus();
+
+		    $('.creatBtn').click(function() {
+		        var start = $('#timepicker_start').val();
+		        var end = $('#timepicker_end').val();
+	            var startPosition = allowTimes.indexOf(start);
+	            var endPosition = allowTimes.indexOf(end);
+	            var startTick,endTick = null;
+	            var html = '';
+
+		        if (start && end) {
+		        	if(start===end){
+		        		var d = dialog({
+		        			title: '提示',
+		        			content: '时间参数设置错误'
+		        		});
+		        		d.show();
+		        	} else {
+			            for (var i = startPosition; i < endPosition; i++) {
+			            	startTick = allowTimes[i];
+
+			            	if(allowTimes[i] === '23:30') {
+			            		endTick = allowTimes[0];
+			            	} else {
+			            		endTick = allowTimes[i+1];
+			            	}
+				        	html+='<div class="time-record">';
+				        	html+='<div class="time-interval"><span class="startTick">'+startTick+'</span>-<span class="endTick">'+endTick+'</span></div>';
+				        	html+='<div class="set-item">+</div>';
+				        	html+='<div class="select-wrap">';
+				        	html+='<a class="selected" href="javascript:;">暂无状态</a>';
+				        	html+='<div class="select-box">';
+				        	html+='<a href="javascript:;" data-value="0">例行工作</a>';
+				        	html+='<a href="javascript:;" data-value="1">拖延</a>';
+				        	html+='<a href="javascript:;" data-value="2">休息</a>';
+				        	html+='<a href="javascript:;" data-value="3">放松娱乐</a>';
+				        	html+='<a href="javascript:;" data-value="4">高效工作</a>';
+				        	html+='</div>';
+				        	html+='</div>';
+				        	html+='</div>';
+			            }
+			            $('.time-table').html(html);
+			            setItem();
+			            selectStatus();
+		        	}
+		        } else {
+		            alert('请选择时间区间');
+		        }
+		    });
+
+		    // $('.status').click(function(){
+		    // 	var self = $(this);
+		    // 	var html = [];
+		    // 	html.push('<input id="mandatoryWork" type="radio" name="timeType" value="0"><label for="mandatoryWork">例行工作</label><br>');
+		    // 	html.push('<input id="procrastination" type="radio" name="timeType" value="1"><label for="procrastination">拖延症</label><br>');
+		    // 	html.push('<input id="rest" type="radio" name="timeType" value="2"><label for="rest">休息</label><br>');
+		    // 	html.push('<input id="guiltyFreePlay" type="radio" name="timeType" value="3"><label for="guiltyFreePlay">放松玩乐</label><br>');
+		    // 	html.push('<input id="qualityWork" type="radio" name="timeType" value="4"><label for="qualityWork">高效工作</label><br>');
+		    // 	html = html.join('');
+		    // 	console.log(html);
+		    // 	var d = dialog({
+		    // 		title: '选择类型',
+		    // 		content: html,
+		    // 		okValue: '确定',
+				  //   ok: function () {
+				  //   	var timeType = ['例行工作','拖延症','休息','放松玩乐','高效工作'];
+				  //   	var colorClass = ['#f39c12','#e74c3c','#2ecc71','#3498db','#f1c40f'];
+				  //   	var value = $('input[name="timeType"]:checked').val();
+				  //   	self.text(timeType[value]).css({'background':colorClass[value],'color': '#fff'});
+				  //       console.log(value);
+				  //   },
+				  //   cancelValue: '取消',
+				  //   cancel: function () {}		    		
+		    // 	}).width(300);
+		    // 	d.showModal();
+		    // });
+		});
+	</script>
+</body>
+</html>
