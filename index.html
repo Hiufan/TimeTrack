@@ -20,11 +20,14 @@
 					<input id="timepicker_start" type="text" value="06:00"> —
 					<input id="timepicker_end" type="text" value="23:00">
 				</div>
-				<a class="creatBtn" href="javascript:;">重设时段区间</a>
+				<a class="creatBtn" href="javascript:;">保存设置</a>
 			</div>
 		</div>		
 		<div class="pure-u-2-3 main">
 			<div class="inner time-table">
+				
+			</div>
+<!-- 			<div class="inner time-table">
 			    <div class="time-record">
 			        <div class="time-interval">
 			            <span class="startTick">
@@ -1249,15 +1252,86 @@
 			            </div>
 			        </div>
 			    </div>											
-			</div>
+			</div> -->
 		</div>
 	</div>
 
 	<!-- 脚本区 -->
+	<script src="js/bmob-min.js"></script>
 	<script src="js/jquery.js"></script>
 	<script src="js/jquery.datetimepicker.full.min.js"></script>
 	<script src="http://aui.github.io/artDialog/dist/dialog-plus.js"></script>
 	<script>
+		Bmob.initialize("3a89fa9a72ebfa079ae06d03369453d2", "0646da2693861e41fa6541cf3313cf32");
+
+	    var allowTimes = [];
+	    for (var xh = 0; xh <= 23; xh++) {
+	        for (var xm = 0; xm < 60; xm += 30) {
+	            allowTimes.push(("0" + xh).slice( - 2) + ':' + ("0" + xm).slice( - 2));
+	        }
+	    }
+
+	    // 创建时间跟踪
+		function createTimeTrack (ymd) {
+			var DayTrack = Bmob.Object.extend("dayTrack");
+			var dayTrack = null;
+	        var start = '06:00';
+	        var end = '23:00';
+            var startPosition = allowTimes.indexOf(start);
+            var endPosition = allowTimes.indexOf(end);
+            var startTick,endTick = null;
+            var html = '';
+            var object = null;
+            var status = ['暂无状态', '例行工作', '拖延', '休息', '放松娱乐', '高效工作'];
+
+			var query = new Bmob.Query(DayTrack);
+			query.equalTo('date', ymd); //根据日期查询
+			query.find().then(function (results) {
+				if(results.length > 0) { // 如果已存在该日期的记录
+					for(var i = 0; i < results.length; i++) {
+						object = results[i];
+						html+='<div class="time-record">';
+			        	html+='<div class="time-interval"><span class="startTick">' + object.get('startTime') + '</span> - <span class="endTick">' + object.get('endTime') + '</span></div>';
+			        	html+='<div class="set-item">+</div>';
+			        	html+='<div class="select-wrap">';
+			        	html+='<a class="selected" href="javascript:;">' + status[object.get('status')] +'</a>';
+			        	html+='<div class="select-box">';
+			        	html+='<a href="javascript:;" data-value="0">例行工作</a>';
+			        	html+='<a href="javascript:;" data-value="1">拖延</a>';
+			        	html+='<a href="javascript:;" data-value="2">休息</a>';
+			        	html+='<a href="javascript:;" data-value="3">放松娱乐</a>';
+			        	html+='<a href="javascript:;" data-value="4">高效工作</a>';
+			        	html+='</div>';
+			        	html+='</div>';
+			        	html+='</div>';							
+					}
+
+					$('.time-table').html(html);
+		            setItem();
+		            selectStatus();
+
+				} else { //如果该日期下的记录不存在
+			    	dayTrack = new DayTrack();
+			    	dayTrack.set('date', ymd);
+			    	dayTrack.set('startTime', startTick);
+			    	dayTrack.set('endTime', endTick);
+			    	dayTrack.set('content', '');
+			    	dayTrack.set('status', 0);
+			    	dayTrack.set('remark', '');
+	            	dayTrack.save(null, {
+				      	success: function(object) {
+				        	console.log("create object success, object id:"+object.id);
+				      	},
+				      	error: function(model, error) {
+				        	console.log("create object fail."+error);
+				      	}
+				    });
+				}
+			},function(error) {
+				console.log("查询失败: " + error.code + " " + error.message);
+			});	
+		}
+		// 设置事项
 		function setItem() {
 		    $('.set-item').on('click',function(){
 		    	var self = $(this);
@@ -1275,6 +1349,7 @@
 		    	d.showModal();
 		    });			
 		}
+		// 选择状态
 		function selectStatus(){
 			var selected = $('.selected');
 			var selectBox = $('.select-box');
@@ -1288,7 +1363,6 @@
 				var colors = ['#f39c12','#e74c3c','#2ecc71','#3498db','#f1c40f'];
 				var value = $(this).data('value');
 				var status = $(this).text();
-				console.log(value);
 			    $(this).parent().prev('.selected').text(status).css({'background':colors[value],'color':'#fff'});
 			});
 
@@ -1302,13 +1376,6 @@
 		}
 
 		$(function() {
-		    var allowTimes = [];
-		    for (var xh = 0; xh <= 23; xh++) {
-		        for (var xm = 0; xm < 60; xm += 30) {
-		            allowTimes.push(("0" + xh).slice( - 2) + ':' + ("0" + xm).slice( - 2));
-		        }
-		    }
-
 		    $.datetimepicker.setLocale('zh');
 			$('#datepicker').datetimepicker({
 			  	format:'d.m.Y',
@@ -1328,8 +1395,8 @@
 				},
 			  	timepicker:false,
 			  	onGenerate:function( ct ){
-    				$(this).find('.xdsoft_date:not(.xdsoft_current)')
-      				.addClass('xdsoft_disabled');
+			  		var ymd = ct.getFullYear()+'/'+ct.getMonth()+'/'+ct.getDate();
+					createTimeTrack(ymd);
   				}
 			});
 
@@ -1359,79 +1426,52 @@
 		    setItem();
 		    selectStatus();
 
-		    $('.creatBtn').click(function() {
-		        var start = $('#timepicker_start').val();
-		        var end = $('#timepicker_end').val();
-	            var startPosition = allowTimes.indexOf(start);
-	            var endPosition = allowTimes.indexOf(end);
-	            var startTick,endTick = null;
-	            var html = '';
+		    // $('.creatBtn').click(function() {
+		    //     var start = $('#timepicker_start').val();
+		    //     var end = $('#timepicker_end').val();
+	     //        var startPosition = allowTimes.indexOf(start);
+	     //        var endPosition = allowTimes.indexOf(end);
+	     //        var startTick,endTick = null;
+	     //        var html = '';
 
-		        if (start && end) {
-		        	if(start===end){
-		        		var d = dialog({
-		        			title: '提示',
-		        			content: '时间参数设置错误'
-		        		});
-		        		d.show();
-		        	} else {
-			            for (var i = startPosition; i < endPosition; i++) {
-			            	startTick = allowTimes[i];
+		    //     if (start && end) {
+		    //     	if(start===end){
+		    //     		var d = dialog({
+		    //     			title: '提示',
+		    //     			content: '时间参数设置错误'
+		    //     		});
+		    //     		d.show();
+		    //     	} else {
+			   //          for (var i = startPosition; i < endPosition; i++) {
+			   //          	startTick = allowTimes[i];
 
-			            	if(allowTimes[i] === '23:30') {
-			            		endTick = allowTimes[0];
-			            	} else {
-			            		endTick = allowTimes[i+1];
-			            	}
-				        	html+='<div class="time-record">';
-				        	html+='<div class="time-interval"><span class="startTick">'+startTick+'</span>-<span class="endTick">'+endTick+'</span></div>';
-				        	html+='<div class="set-item">+</div>';
-				        	html+='<div class="select-wrap">';
-				        	html+='<a class="selected" href="javascript:;">暂无状态</a>';
-				        	html+='<div class="select-box">';
-				        	html+='<a href="javascript:;" data-value="0">例行工作</a>';
-				        	html+='<a href="javascript:;" data-value="1">拖延</a>';
-				        	html+='<a href="javascript:;" data-value="2">休息</a>';
-				        	html+='<a href="javascript:;" data-value="3">放松娱乐</a>';
-				        	html+='<a href="javascript:;" data-value="4">高效工作</a>';
-				        	html+='</div>';
-				        	html+='</div>';
-				        	html+='</div>';
-			            }
-			            $('.time-table').html(html);
-			            setItem();
-			            selectStatus();
-		        	}
-		        } else {
-		            alert('请选择时间区间');
-		        }
-		    });
-
-		    // $('.status').click(function(){
-		    // 	var self = $(this);
-		    // 	var html = [];
-		    // 	html.push('<input id="mandatoryWork" type="radio" name="timeType" value="0"><label for="mandatoryWork">例行工作</label><br>');
-		    // 	html.push('<input id="procrastination" type="radio" name="timeType" value="1"><label for="procrastination">拖延症</label><br>');
-		    // 	html.push('<input id="rest" type="radio" name="timeType" value="2"><label for="rest">休息</label><br>');
-		    // 	html.push('<input id="guiltyFreePlay" type="radio" name="timeType" value="3"><label for="guiltyFreePlay">放松玩乐</label><br>');
-		    // 	html.push('<input id="qualityWork" type="radio" name="timeType" value="4"><label for="qualityWork">高效工作</label><br>');
-		    // 	html = html.join('');
-		    // 	console.log(html);
-		    // 	var d = dialog({
-		    // 		title: '选择类型',
-		    // 		content: html,
-		    // 		okValue: '确定',
-				  //   ok: function () {
-				  //   	var timeType = ['例行工作','拖延症','休息','放松玩乐','高效工作'];
-				  //   	var colorClass = ['#f39c12','#e74c3c','#2ecc71','#3498db','#f1c40f'];
-				  //   	var value = $('input[name="timeType"]:checked').val();
-				  //   	self.text(timeType[value]).css({'background':colorClass[value],'color': '#fff'});
-				  //       console.log(value);
-				  //   },
-				  //   cancelValue: '取消',
-				  //   cancel: function () {}		    		
-		    // 	}).width(300);
-		    // 	d.showModal();
+			   //          	if(allowTimes[i] === '23:30') {
+			   //          		endTick = allowTimes[0];
+			   //          	} else {
+			   //          		endTick = allowTimes[i+1];
+			   //          	}
+				  //       	html+='<div class="time-record">';
+				  //       	html+='<div class="time-interval"><span class="startTick">'+startTick+'</span> - <span class="endTick">'+endTick+'</span></div>';
+				  //       	html+='<div class="set-item">+</div>';
+				  //       	html+='<div class="select-wrap">';
+				  //       	html+='<a class="selected" href="javascript:;">暂无状态</a>';
+				  //       	html+='<div class="select-box">';
+				  //       	html+='<a href="javascript:;" data-value="0">例行工作</a>';
+				  //       	html+='<a href="javascript:;" data-value="1">拖延</a>';
+				  //       	html+='<a href="javascript:;" data-value="2">休息</a>';
+				  //       	html+='<a href="javascript:;" data-value="3">放松娱乐</a>';
+				  //       	html+='<a href="javascript:;" data-value="4">高效工作</a>';
+				  //       	html+='</div>';
+				  //       	html+='</div>';
+				  //       	html+='</div>';
+			   //          }
+			   //          $('.time-table').html(html);
+			   //          setItem();
+			   //          selectStatus();
+		    //     	}
+		    //     } else {
+		    //         alert('请选择时间区间');
+		    //     }
 		    // });
 		});
 	</script>
